@@ -1,5 +1,5 @@
 function checkNews() {
-    let news = document.getElementById("newsInput").value.toLowerCase();
+    let news = document.getElementById("newsInput").value;
     let result = document.getElementById("result");
 
     if (news.trim() === "") {
