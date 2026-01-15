@@ -8,21 +8,23 @@ function checkNews() {
         return;
     }
 
-    let fakeWords = ["miracle", "shocking", "secret", "government hiding", "you won't believe", "100% guarantee"];
+    result.innerHTML = "Checking with AI...";
+    result.style.color = "blue";
 
-    let score = 0;
-
-    for (let i = 0; i < fakeWords.length; i++) {
-        if (news.includes(fakeWords[i])) {
-            score++;
-        }
-    }
-
-    if (score >= 2) {
-        result.innerHTML = "⚠️ This news looks FAKE";
+    fetch("https://fake-news-ai-backend.onrender.com/predict", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ text: news })
+    })
+    .then(response => response.json())
+    .then(data => {
+        result.innerHTML = "🔍 AI Prediction: " + data.prediction;
+        result.style.color = data.prediction === "Fake" ? "red" : "green";
+    })
+    .catch(error => {
+        result.innerHTML = "❌ Server error. Try again.";
         result.style.color = "red";
-    } else {
-        result.innerHTML = "✅ This news looks REAL";
-        result.style.color = "green";
-    }
+    });
 }
