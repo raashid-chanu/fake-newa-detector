@@ -18,13 +18,13 @@ function checkNews() {
         },
         body: JSON.stringify({ text: news })
     })
-    .then(response => response.json())
+    .then(res => res.json())
     .then(data => {
         result.innerHTML = "🔍 AI Prediction: " + data.prediction;
         result.style.color = data.prediction === "Fake" ? "red" : "green";
     })
-    .catch(error => {
-        result.innerHTML = "❌ Server error. Try again.";
+    .catch(err => {
+        result.innerHTML = "❌ Backend error";
         result.style.color = "red";
     });
 }
